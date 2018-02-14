@@ -23,25 +23,27 @@ int size_cad(int size){
 }
 
 void enc_Des(long size, int opc){
-	if(opc == 1){
-		for(int i = 0; i <  size; i++){
-			c = fgetc(p);
-			for(int j = 0; j < 62; j++){
-				if(c == a[j]) { c = e[j]; cadena.append(&c); break; } 
-				else if(c == 32){ c = 32; cadena.append(&c); break; }
-				else if(c == 10){ c = 10; cadena.append(&c); break; }
+	switch(opc){
+		case 1:
+			for(int i = 0; i <  size; i++){
+				c = fgetc(p);
+				for(int j = 0; j < 62; j++){
+					if(c == a[j]) { c = e[j]; cadena.append(&c); break; } 
+					else if(c == 32){ c = 32; cadena.append(&c); break; }
+					else if(c == 10){ c = 10; cadena.append(&c); break; }
+				}
 			}
-		}
-		
-	} else{
-		for(int i = 0; i <  size; i++){
-			c = fgetc(p);
-			for(int j = 0; j < 62; j++){
-				if(c == e[j]) { c = a[j]; cadena.append(&c); break; } 
-				else if(c == 32){ c = 32; cadena.append(&c); break; }
-				else if(c == 10){ c = 10; cadena.append(&c); break; }
+			break;
+		case 2:
+			for(int i = 0; i <  size; i++){
+				c = fgetc(p);
+				for(int j = 0; j < 62; j++){
+					if(c == e[j]) { c = a[j]; cadena.append(&c); break; } 
+					else if(c == 32){ c = 32; cadena.append(&c); break; }
+					else if(c == 10){ c = 10; cadena.append(&c); break; }
+				}
 			}
-		}
+			break;	
 	}
 	c = '.'; 
 	cadena.append(&c);
@@ -60,7 +62,7 @@ int main(void){
 			p = fopen("Encript.txt","r");
 			q = fopen("Desencript.txt","w");
 			size=size_cad(size);
-    		fseek(p,0,SEEK_SET);
+    			fseek(p,0,SEEK_SET);
 			enc_Des(size, opc);
 			fputs(cadena.c_str(),q);
 			printf("Proceso Terminado, Abriendo archivo Desencript.txt\n");
